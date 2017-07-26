@@ -1,0 +1,28 @@
+{
+  "name": "registration",
+  "version": "1.0.0",
+  "description": "registration for participants",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "*",
+    "body-parser": "*",
+    "express-validator": "*",
+    "path": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jimeliot/User_registration.git"
+  },
+  "keywords": [
+    "registration"
+  ],
+  "author": "Jim Koilraj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jimeliot/User_registration/issues"
+  },
+  "homepage": "https://github.com/Jimeliot/User_registration#readme"
+}
