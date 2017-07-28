@@ -111,135 +111,38 @@ app.delete('/delete/part/:id', function (req, res) {
 app.get('/manage/filter/:name/:fname/:dob/:camp', (req, res) => {
     //text fields
     var search = {}
-    if (!req.param.name){
-    search.name=req.param.name;
+    if (req.params.name!='nil'){
+    search.name=req.params.name;
     }
-    if (!req.param.fname){
-        search.fathername=req.param.fname;
+    if (req.params.fname!='nil'){
+        search.fathername=req.params.fname;
     }
-    if(!dob){
-        search.dob=req.param.dob;
+    if(req.params.dob!='0001-01-01'){
+        search.dob=req.params.dob;
     }
-    if(!camp){
-        search.camp=req.param.camp;
+    if(req.params.camp!='nil'){
+        search.camp=req.params.camp;
     }
-    
-    console.log(search);
+    console.log(search)
+var findDocuments = function (db, callback) {
+        // Get the documents collection 
+        var collection = db.collection('participants');
+        // Find some documents 
+        collection.find(search).toArray(function (err, docs) {
+            assert.equal(err, null);
+            console.log("Found the following records");
+            console.dir(docs);
+            callback(docs);
+        });
+    }
+    MongoClient.connect(url, function (err, db) {
+        findDocuments(db, function () {
+            db.close();
+        });
+    });
 });
-/*
-//render logic or none is checked
-//if all are checked
-if ((CName == 1 && CFName == 1 && CDob == 1 && CCamp == 1) || (CName == 0 && CFName == 0 && CDob == 0 && CCamp == 0)){
 
-    var findDocuments = function (db, callback) {
-        // Get the documents collection 
-        var collection = db.collection('participants');
-        // Find some documents 
-        collection.find(
-            {
-                "participant.name":Name,
-                "participant.fathername": FName,
-                "participant.dob": Dob,
-                "participant.camp": Camp 
-            }
-        ).toArray(function (err, docs) {
-            assert.equal(err, null);
-            console.log("Found the following records");
-            console.dir(docs);
-            callback(docs);
-        });
-    }
-    MongoClient.connect(url, function (err, db) {
-        findDocuments(db, function () {
-            db.close();
-        });
-    });
-} 
 //if only Name is checked
-if (CName[1] == 1 && CFName == 0 && CDob == 0 && CCamp == 0) {
-
-    var findDocuments = function (db, callback) {
-        // Get the documents collection 
-        var collection = db.collection('participants');
-        // Find some documents 
-        collection.find(
-            {
-                "participant.name": Name
-            }
-        ).toArray(function (err, docs) {
-            assert.equal(err, null);
-            console.log("Found the following records");
-            console.dir(docs);
-            callback(docs);
-        });
-    }
-    MongoClient.connect(url, function (err, db) {
-        findDocuments(db, function () {
-            db.close();
-        });
-    });
-}
-
-if ( Name != "empty"  && FName != "empty" && Dob != "1111-11-11" && Camp != "empty"){
-
-    var findDocuments = function (db, callback) {
-        // Get the documents collection 
-        var collection = db.collection('participants');
-        // Find some documents 
-        collection.find(
-            {
-                "participant.name":Name,
-                "participant.fathername": FName,
-                "participant.dob": Dob,
-                "participant.camp": Camp 
-            }
-        ).toArray(function (err, docs) {
-            assert.equal(err, null);
-            console.log("Found the following records");
-            console.dir(docs);
-            callback(docs);
-        });
-    }
-    MongoClient.connect(url, function (err, db) {
-        findDocuments(db, function () {
-            db.close();
-        });
-    });
-} 
-
-if ( Name != "empty"  && FName != "empty" && Dob != "1111-11-11" && Camp != "empty"){
-
-    var findDocuments = function (db, callback) {
-        // Get the documents collection 
-        var collection = db.collection('participants');
-        // Find some documents 
-        collection.find(
-            {
-                "participant.name":Name,
-                "participant.fathername": FName,
-                "participant.dob": Dob,
-                "participant.camp": Camp 
-            }
-        ).toArray(function (err, docs) {
-            assert.equal(err, null);
-            console.log("Found the following records");
-            console.dir(docs);
-            callback(docs);
-        });
-    }
-    MongoClient.connect(url, function (err, db) {
-        findDocuments(db, function () {
-            db.close();
-        });
-    });
-} 
-
-
-
-
-})
-*/
-
 
 //server starter
 app.listen(3000, () => {
