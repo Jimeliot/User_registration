@@ -62,17 +62,11 @@ app.get('/manage', (req, res) => {
 
 //add users to DB
 app.post('/add', (req, res) => {
-    var participant = {
-        name: req.body.name,
-        fathername: req.body.fathername,
-        dob: req.body.dob,
-        camp: req.body.camp
-    }
     var insertDocuments = function (db, callback) {
         // Get the documents collection 
         var collection = db.collection('participants');
         // Insert some documents 
-        collection.insert({ participant }, function (err, result) {
+        collection.insert({name: req.body.name, fathername: req.body.fathername, dob: req.body.dob, camp: req.body.camp }, function (err, result) {
             assert.equal(null, err);
             console.log("Inserted participant in the collection");
             callback(result);
@@ -114,36 +108,23 @@ app.delete('/delete/part/:id', function (req, res) {
 
 //filter users
 
-app.post('/manage/filter', (req, res) => {
+app.get('/manage/filter/:name/:fname/:dob/:camp', (req, res) => {
     //text fields
-    var search = {
-        name: req.body.searchbyname,
-        fName: req.body.searchByFathersName,
-        camp: req.body.searchByCamp,
-        date:  req.body.searchByDob
+    var search = {}
+    if (!req.param.name){
+    search.name=req.param.name;
     }
-    //C- checkboxes
-    var CName = req.body.name;
-    var CFName = req.body.fName;
-    var CDob = req.body.DOB;
-    var CCamp = req.body.camp;
-
-    for (var i = 0; i < search.length; i++) {
-        if (search[i] != 'empty') {
-            nonempty[i] = search[i];
-        }
+    if (!req.param.fname){
+        search.fathername=req.param.fname;
     }
-    var NEL = nonempty.length;
-    if (date != "1111-11-11") {
-        nonempty[NEL + 1] = date;
+    if(!dob){
+        search.dob=req.param.dob;
     }
-
-
-    /*
-    if (date != "1111-11-11") {
-        nonempty = date;
-    }*/
-    console.log(nonempty);
+    if(!camp){
+        search.camp=req.param.camp;
+    }
+    
+    console.log(search);
 });
 /*
 //render logic or none is checked
