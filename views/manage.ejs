@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Manage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <h1>Manage</h1> <a href="/">Registration</a>
+    <hr><br>
+
+    <!--search filter -->
+    <form method="POST" action="/manage/filter">
+        <input type='hidden' value='0' name='name'>
+        <input type="checkbox" name='name' value="1"><label for="search">Name</label>
+        <input type="text" name="searchbyname" placeholder="Search by Name" id="name">
+        <br>
+        <input type='hidden' value='0' name='fName'>
+        <input type="checkbox" name=fName value="1"><label for="fathersName">Fathers Name</label>
+        <input type="text" name="searchByFathersName" placeholder="Enter Father's Name" id="fName">
+        <br>
+        <input type='hidden' value='0' name='DOB'>
+        <input type="checkbox" name='DOB' value="1"><label for="dob">Date of Birth</label>
+        <input type="date" name="searchByDob" placeholder="Enter DOB" id="dob">
+        <br>
+        <input type='hidden' value='0' name='camp'>
+        <input type="checkbox" name='camp' value="1"><label for="Camp">Camp</label>
+        <input type="text" name="searchByCamp" placeholder="Camp" id="camp">
+        <br>
+        <button type="submit" class="filter">Search</button>
+    </form>
+    <hr>
+
+    <!--Participants list -->
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Father's Name</th>
+            <th>Date of Birth</th>
+            <th>Camp</th>
+            <th>Remove</th>
+        </tr>
+        <% docs.forEach(function(participant){ %>
+            <tr>
+                <td>
+                    <%= participant.participant.name %>
+                </td>
+                <td>
+                    <%= participant.participant.fathername %>
+                </td>
+                <td>
+                    <%= participant.participant.dob %>
+                </td>
+                <td>
+                    <%= participant.participant.camp %>
+                </td>
+                <td><button type="Delete" data-id="<%= participant._id %>" class="deleteParticipant">Delete</button>
+                </td>
+
+                <% }); %>
+            </tr>
+    </table>
+</body>
+
+</html>

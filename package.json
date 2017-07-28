@@ -7,9 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "*",
     "body-parser": "*",
+    "ejs": "^2.5.6",
+    "express": "*",
     "express-validator": "*",
+    "mongodb": "^2.2.30",
+    "mongojs": "*",
     "path": "*"
   },
   "repository": {
